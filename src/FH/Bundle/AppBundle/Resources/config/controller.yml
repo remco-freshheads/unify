@@ -1,0 +1,3 @@
+services:
+    fh_app.controller.main:
+        class: FH\Bundle\AppBundle\Controller\MainController

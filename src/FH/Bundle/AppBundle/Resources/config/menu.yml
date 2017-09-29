@@ -1,0 +1,7 @@
+services:
+    fh_app.menu_builder:
+        class: FH\Bundle\AppBundle\Menu\MenuBuilder
+        arguments:
+            - '@knp_menu.factory'
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }

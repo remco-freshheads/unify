@@ -1,0 +1,8 @@
+{
+  "name": "fh-project",
+  "private": true,
+  "devDependencies": {
+    "lodash": "^4.9.0",
+    "fh-gulp-task": "git+ssh://git@github.com/freshheads/gulp-task#semver:^4.1.0"
+  }
+}

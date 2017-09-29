@@ -1,0 +1,140 @@
+/**
+ * Mixin: Reset arranged modules
+ *
+ * 1. Reset display property
+ * 2. 100% width
+ * 3. Reset padding in case of `.arrange-gutter`
+ * 4. Re-initiate fluid images
+ */
+@mixin arrange-collapse () {
+    display: block; /* 1 */
+
+    > .arrange-size-fill,
+    > .arrange-size-fit {
+        display: block; /* 1 */
+        width: 100%; /* 2 */
+        padding-left: 0; /* 3 */
+
+        img {
+            max-width: 100%; /* 4 */
+            height: auto; /* 4 */
+        }
+    }
+}
+
+/**
+ * 1. Rely on table layout.
+ * 2. Reset the table-layout algorithm in case a component is nested.
+ * 3. Zero out the default spacing that might be on an element (e.g., `ul`).
+ * 4. Make sure the component fills the full width of its parent.
+ */
+.arrange {
+    display: table; /* 1 */
+    table-layout: auto; /* 2 */
+    width: 100%; /* 4 */
+    padding: 0; /* 3 */
+    margin: 0; /* 3 */
+}
+
+/**
+ * There are two possible types of child.
+ * `size-fill` will expand to fill all of the remaining space not filled by
+ * `size-fit` elements.
+ *
+ * 1. All cells are top-aligned by default
+ * 2. Zero out any default spacing that might be on an element (e.g., `li`);
+ *    Margin has no effect when coupled with `display: table-cell`.
+ */
+.arrange-size-fill,
+.arrange-size-fit {
+    display: table-cell;
+    vertical-align: top; /* 1 */
+    padding: 0; /* 2 */
+}
+
+/**
+ * Make sure the main content block expands to fill the remaining space.
+ */
+.arrange-size-fill {
+    width: 100%;
+}
+
+/**
+ * Defend against a side-effect of this layout pattern: images in
+ * 'arrange-size-fit' cannot be fluid, otherwise they lose their ability to
+ * provide size to a cell.
+ */
+.arrange-size-fit img {
+    width: auto;
+    max-width: none;
+}
+
+// Vertical alignment modifiers
+.arrange-top { // Modifier
+    > .arrange-size-fill,
+    > .arrange-size-fit {
+        vertical-align: top;
+    }
+}
+
+.arrange-middle { // Modifier
+
+    .arrange-size-fill,
+    .arrange-size-fit {
+        vertical-align: middle;
+    }
+}
+
+.arrange-bottom { // Modifier
+
+    .arrange-size-fill,
+    .arrange-size-fit {
+        vertical-align: bottom;
+    }
+}
+
+/* Equal-width modifier
+ * This layout algorithm will create equal-width table cells, irrespective of
+ * the width of their content.
+ */
+.arrange-equal { // Modifier
+
+    /**
+     * Give the cells an equal width.
+     * It's recommended that only 'Arrange-sizeFill' be used for equal width cells.
+     * Their inner images will automatically be responsive.
+     */
+    > .arrange-size-fill,
+    > .arrange-size-fit {
+        width: auto;
+    }
+}
+
+// Gutter-separating modifier
+
+.arrange-gutter {
+    > .arrange-size-fill,
+    > .arrange-size-fit {
+        padding-left: $space;
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+}
+
+// Arrange collapse
+
+.arrange-collapse {
+    @include arrange-collapse;
+}
+
+/*  Responsive
+ *  Collapsed arrange based on breakpoint */
+@each $state, $size in $mq-breakpoints {
+    @include mq($until: #{$state}) {
+        .arrange-collapse-#{$state} {
+            @include arrange-collapse;
+        }
+    }
+}

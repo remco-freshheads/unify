@@ -1,0 +1,27 @@
+{% extends 'FHStyleBundle::base_responsive.html.twig' %}
+
+{% block head_style %}
+    <link rel="stylesheet" href="{{ webpack_asset('assets/frontend/build', 'app', 'css') }}" />
+{% endblock %}
+
+{% block body_script_bottom %}
+    <script type="text/javascript" src="{{ webpack_asset('assets/frontend/build', 'app', 'js') }}"></script>
+{% endblock %}
+
+{% block title %}App title{% endblock %}
+
+{% block container_class %}wrapper{% endblock container_class %}
+
+{% block header %}
+    <header>
+        <nav>{{ knp_menu_render('main') }}</nav>
+    </header>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <span class="credits">
+            Website door <a href="http://www.freshheads.com" rel="external">Freshheads</a>
+        </span>
+    </footer>
+{% endblock %}

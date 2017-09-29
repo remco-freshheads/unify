@@ -1,0 +1,3 @@
+home:
+    path:  /
+    defaults: { _controller: fh_app.controller.main:homeAction }

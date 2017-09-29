@@ -1,0 +1,14 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    session:
+        handler_id: ~  # docker session storage in standard application folder does not work with docker, fall back on php default folder
+
+parameters:
+    database_host: mysql
+    database_user: root
+
+    redis_host:    redis
+    mailer_port:   1025
+    mailer_host:   mailhog

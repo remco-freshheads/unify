@@ -1,0 +1,10 @@
+# Prevent any sort of execution in the uploads directory
+<Files *>
+    SetHandler default-handler
+</Files>
+
+# Only allow GET requests
+<LimitExcept GET HEAD>
+    Order Allow,Deny
+    Deny from all
+</LimitExcept>
