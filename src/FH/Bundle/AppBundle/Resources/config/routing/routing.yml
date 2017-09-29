@@ -5,3 +5,7 @@ home:
 app:
     path:  /app/{token}
     defaults: { _controller: fh_app.controller.main:appAction }
+
+update:
+    path:  /update-playlist/{token}
+    defaults: { _controller: fh_app.controller.main:updatePlaylistAction }

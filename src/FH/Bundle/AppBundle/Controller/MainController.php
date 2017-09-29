@@ -44,9 +44,12 @@ class MainController
         }
 
         $options = [
-//            'scope' => [
-//                ''
-//            ]
+            'scope' => [
+                'playlist-read-private',
+                'playlist-read-collaborative',
+                'playlist-modify-private',
+                'playlist-modify-public'
+            ]
         ];
 
         return new RedirectResponse(
@@ -59,19 +62,6 @@ class MainController
         $this->api->setAccessToken($token);
 
         try {
-//            $genres = $this->api->getGenreSeeds();
-//
-//            foreach ($genres->genres as $genre) {
-//                $ourGenre = new Genre();
-//                $ourGenre->title = $genre;
-//
-//                $this->genreRepository->save($ourGenre);
-//            }
-//
-//            echo '<pre>';
-//            print_r($genres);
-//            die(__FILE__ . ' at line: ' . __LINE__);
-
             $recommendations = $this->api->getRecommendations([
                 'seed_genres' => ['country']
             ]);
@@ -86,5 +76,36 @@ class MainController
         echo "<pre>";
         print_r($this->api->me());
         die(__FILE__ . ' at line: ' . __LINE__); //@todo remove
+    }
+    
+    public function updatePlaylistAction(Request $request, string $token)
+    {
+        $this->api->setAccessToken($token);
+
+        $userId = 1123160395;
+        $playlist = '19IJ7aaEqVzTBaYtZb5Ij3';
+
+        $currentTracks = $this->api->getUserPlaylistTracks($userId, $playlist)->items;
+
+        $tracksToDelete = array_map(
+            function ($track) {
+                return [ 'id' => $track->track->id ];
+            },
+            $currentTracks
+        );
+
+        $this->api->deleteUserPlaylistTracks($userId, $playlist, $tracksToDelete);
+
+
+        $tracksToAdd = array_map(
+            function($track) {
+                return $track->uri;
+            },
+            $this->api->search('rock', 'track')->tracks->items
+        );
+
+        $this->api->addUserPlaylistTracks($userId, $playlist, $tracksToAdd);
+
+        die('hier');
     }
 }
