@@ -21,5 +21,6 @@ class FHAppExtension extends Extension
         $loader->load('controller.yml');
         $loader->load('menu.yml');
         $loader->load('spotify.yml');
+        $loader->load('repository.yml');
     }
 }

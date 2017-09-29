@@ -2,6 +2,8 @@
 
 namespace FH\Bundle\AppBundle\Controller;
 
+use FH\Bundle\AppBundle\Entity\Genre;
+use FH\Bundle\AppBundle\Entity\GenreRepository;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\SpotifyWebAPIException;
@@ -14,12 +16,14 @@ class MainController
     private $api;
     private $session;
     private $urlGenerator;
+    private $genreRepository;
 
-    public function __construct(SpotifyWebAPI $spotifyApi, Session $session, UrlGeneratorInterface $urlGenerator)
+    public function __construct(SpotifyWebAPI $spotifyApi, Session $session, UrlGeneratorInterface $urlGenerator, GenreRepository $genreRepository)
     {
         $this->api = $spotifyApi;
         $this->session = $session;
         $this->urlGenerator = $urlGenerator;
+        $this->genreRepository = $genreRepository;
     }
 
     public function homeAction(Request $request): RedirectResponse
@@ -55,7 +59,20 @@ class MainController
         $this->api->setAccessToken($token);
 
         try {
-            $test = $this->api->getRecommendations([
+//            $genres = $this->api->getGenreSeeds();
+//
+//            foreach ($genres->genres as $genre) {
+//                $ourGenre = new Genre();
+//                $ourGenre->title = $genre;
+//
+//                $this->genreRepository->save($ourGenre);
+//            }
+//
+//            echo '<pre>';
+//            print_r($genres);
+//            die(__FILE__ . ' at line: ' . __LINE__);
+
+            $recommendations = $this->api->getRecommendations([
                 'seed_genres' => ['country']
             ]);
         } catch (SpotifyWebAPIException $exception) {
@@ -64,7 +81,7 @@ class MainController
         }
 
         echo '<pre>';
-        print_r($test);
+        print_r($recommendations);
         die(__FILE__ . ' at line: ' . __LINE__);
         echo "<pre>";
         print_r($this->api->me());

@@ -1,0 +1,12 @@
+FH\Bundle\AppBundle\Entity\Genre:
+    type: entity
+    table: genre
+    repositoryClass: FH\Bundle\AppBundle\Entity\GenreRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string

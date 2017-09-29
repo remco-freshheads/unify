@@ -5,3 +5,4 @@ services:
             - '@unify_app.spotify.client'
             - '@unify_app.spotify.session'
             - '@router'
+            - '@unify_app.repository.genre'

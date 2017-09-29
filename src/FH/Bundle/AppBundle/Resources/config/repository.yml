@@ -1,0 +1,6 @@
+services:
+    unify_app.repository.genre:
+        class: FH\Bundle\AppBundle\Entity\GenreRepository
+        factory: ['@doctrine', 'getRepository']
+        arguments:
+            - FH\Bundle\AppBundle\Entity\Genre
