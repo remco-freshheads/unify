@@ -1,3 +1,7 @@
 services:
     fh_app.controller.main:
         class: FH\Bundle\AppBundle\Controller\MainController
+        arguments:
+            - '@unify_app.spotify.client'
+            - '@unify_app.spotify.session'
+            - '@router'

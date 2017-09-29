@@ -1,3 +1,7 @@
 home:
     path:  /
     defaults: { _controller: fh_app.controller.main:homeAction }
+
+app:
+    path:  /app/{token}
+    defaults: { _controller: fh_app.controller.main:appAction }

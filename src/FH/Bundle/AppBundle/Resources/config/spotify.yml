@@ -1,0 +1,10 @@
+services:
+
+    unify_app.spotify.session:
+        class: SpotifyWebAPI\Session
+        arguments:
+            - '78c830bc77ff4b3fb89590235890f7a2'
+            - '25dda8a9fef9444a952d98c767ae9165'
+            - 'https://unify.gijsn.local/app_debug.php'
+    unify_app.spotify.client:
+        class: SpotifyWebAPI\SpotifyWebAPI
